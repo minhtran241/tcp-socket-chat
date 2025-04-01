@@ -3,10 +3,16 @@ Login UI Implementation
 Handles the login interface for the chat client with a compact design
 """
 
+import os
 import tkinter as tk
-from tkinter import Frame, Label, Entry, Button, messagebox
+if os.name == "posix":
+    from tkmacosx import Button
+else:
+    # For Windows and Linux, use the standard tkinter Button
+    from tkinter import Button
+from tkinter import Frame, Label, messagebox, Entry
 
-from client.theme import FONT_BOLD, FONT_REGULAR
+from client.theme import FONT_BOLD, FONT_REGULAR, FONT_HEADING, FONT_SUBHEADING
 
 
 class LoginGUI:
@@ -38,16 +44,25 @@ class LoginGUI:
             relief=tk.SOLID
         )
         # Position the frame in the center with fixed width
-        self.login_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER, width=300, height=250)
+        self.login_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER, width=380, height=250)
 
         # Add app title
         title_label = Label(
             self.login_frame, 
-            text="Chat App", 
-            font=FONT_BOLD,
-            bg=self.colors["bg_main"]
+            text="TCP Socket Chat App", 
+            font=FONT_HEADING,
+            fg=self.colors["primary"],
+            bg=self.colors["bg_main"],
         )
-        title_label.pack(pady=(15, 15))
+        title_label.pack(pady=(10, 0))
+        # Add subtitle
+        subtitle_label = Label(
+			self.login_frame,	
+            text="Login to Chat",
+            font=FONT_SUBHEADING,
+            bg=self.colors["bg_main"],
+		)
+        subtitle_label.pack(pady=(0, 10))
 
         # Create a form layout with grid
         form_frame = Frame(self.login_frame, bg=self.colors["bg_main"])
@@ -58,7 +73,7 @@ class LoginGUI:
             form_frame, 
             text="Username:", 
             bg=self.colors["bg_main"],
-            font=FONT_REGULAR,
+            font=FONT_BOLD,
             width=8,
             anchor="e"
         ).grid(row=0, column=0, sticky="e", pady=2)
@@ -68,7 +83,7 @@ class LoginGUI:
             font=FONT_REGULAR,
             bd=1,
             relief=tk.GROOVE,
-            width=15
+            width=15,
         )
         self.username_entry.grid(row=0, column=1, sticky="ew", pady=2, ipady=3)
         self.username_entry.focus()
@@ -78,7 +93,7 @@ class LoginGUI:
             form_frame, 
             text="Host:", 
             bg=self.colors["bg_main"],
-            font=FONT_REGULAR,
+            font=FONT_BOLD,
             width=8,
             anchor="e"
         ).grid(row=1, column=0, sticky="e", pady=2)
@@ -98,7 +113,7 @@ class LoginGUI:
             form_frame, 
             text="Port:", 
             bg=self.colors["bg_main"],
-            font=FONT_REGULAR,
+            font=FONT_BOLD,
             width=8,
             anchor="e"
         ).grid(row=2, column=0, sticky="e", pady=2)
@@ -121,10 +136,12 @@ class LoginGUI:
             self.login_frame, 
             text="Connect",
             command=self.connect_to_server,
-            font=FONT_REGULAR,
+            font=FONT_BOLD,
             padx=10,
             pady=5,
-            cursor="hand2"
+            cursor="hand2",
+            background=self.colors["primary"],
+			foreground=self.colors["primary_fg"],
         )
         self.connect_button.pack(pady=15)
         

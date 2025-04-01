@@ -5,9 +5,8 @@ Handles server setup and client connections
 
 import socket
 import threading
-import sys
 from server.client_handler import ClientHandler
-from common.constants import DEFAULT_SERVER_HOST, DEFAULT_PORT, SYSTEM_MESSAGE
+from common.constants import DEFAULT_SERVER_HOST, DEFAULT_PORT
 
 
 class ChatServer:

@@ -2,9 +2,14 @@
 Chat UI Implementation
 Handles the chat interface for the chat client with enhanced visual styling
 """
-
+import os
 import tkinter as tk
-from tkinter import scrolledtext, Button, Frame, Label, messagebox
+if os.name == "posix":
+    from tkmacosx import Button
+else:
+	# For Windows and Linux, use the standard tkinter Button
+    from tkinter import Button
+from tkinter import scrolledtext, Frame, Label, messagebox
 import queue
 import datetime
 import webbrowser
@@ -52,6 +57,15 @@ class ChatGUI:
         header_frame = Frame(self.chat_frame, bg=self.colors["bg_main"], padx=10, pady=8)
         header_frame.pack(fill=tk.X)
         
+		# Geen dot for online status
+        online_status = Label(
+			header_frame, 
+			text="●", 
+			bg=self.colors["bg_main"], 
+			fg=self.colors["online_status"],
+			font=FONT_BOLD
+		)
+        online_status.pack(side=tk.LEFT)
         user_label = Label(
             header_frame, 
             text=f"Logged in as: {self.client.username}",
@@ -65,16 +79,18 @@ class ChatGUI:
             header_frame, 
             text="Disconnect", 
             command=self.disconnect_from_server,
-            font=FONT_REGULAR,
+            font=FONT_BOLD,
             padx=10,
             pady=2,
-            cursor="hand2"
+            cursor="hand2",
+            background=self.colors["disconnect_button_bg"],
+			foreground=self.colors["disconnect_button_fg"],
         )
         self.disconnect_button.pack(side=tk.RIGHT)
 
         # Chat area with messages display
-        chat_area = Frame(self.chat_frame, bg=self.colors["bg_main"])
-        chat_area.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        chat_area = Frame(self.chat_frame, bg=self.colors["bg_main"], highlightbackground=self.colors["primary"])
+        chat_area.pack(fill=tk.BOTH, expand=True, padx=10, pady=(0, 10))
         
         # Messages display with rounded corners and border
         self.chat_display = scrolledtext.ScrolledText(
@@ -85,7 +101,7 @@ class ChatGUI:
             bd=1,
             relief=tk.SOLID,
             padx=8,
-            pady=8
+            pady=8,
         )
         self.chat_display.pack(fill=tk.BOTH, expand=True)
         self.chat_display.config(state=tk.DISABLED)
@@ -123,10 +139,12 @@ class ChatGUI:
             input_frame, 
             text="Send", 
             command=self.send_message,
-            font=FONT_REGULAR,
+            font=FONT_BOLD,
             padx=15,
             pady=5,
-            cursor="hand2"
+            cursor="hand2",
+            background=self.colors["primary"],
+            foreground=self.colors["primary_fg"],
         )
         self.send_button.pack(side=tk.RIGHT, padx=5)
 
@@ -134,14 +152,14 @@ class ChatGUI:
         self.message_entry.bind("<Return>", self.handle_return_key)
         
         # Add a status bar
-        self.status_frame = Frame(self.chat_frame, bg=self.colors["status_bar"], height=20)
+        self.status_frame = Frame(self.chat_frame, bg=self.colors["primary"], height=20)
         self.status_frame.pack(fill=tk.X, side=tk.BOTTOM)
         
         self.status_label = Label(
             self.status_frame, 
             text=f"Connected to {self.client.host}:{self.client.port}", 
-            bg=self.colors["status_bar"], 
-            fg=self.colors["status_text"],
+            bg=self.colors["primary"], 
+            fg=self.colors["primary_fg"],
             anchor="w",
             padx=10
         )
@@ -191,7 +209,7 @@ class ChatGUI:
         self.chat_display.config(state=tk.NORMAL)
 
         # Determine message type for formatting
-        if message.startswith(f"{self.client.username}: "):
+        if message.startswith(f"@{self.client.username}: "):
             msg_tag = "my_message"
         elif message.startswith(DM_FROM):
             msg_tag = "dm_to_me"

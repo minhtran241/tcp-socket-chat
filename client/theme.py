@@ -8,8 +8,11 @@ THEME_COLORS = {
     "light": {
         "bg_main": "#f5f5f5",       # Main background - light gray
         "bg_input": "#ffffff",       # Input area - white
-        "status_bar": "#e0e0e0",     # Status bar background
-        "status_text": "#616161",    # Status bar text
+        "primary": "#2196F3",      # Primary color - blue
+        "primary_fg": "#ffffff",  # Primary text color - white
+        "online_status": "#4caf50",  # Green for online status
+        "disconnect_button_bg": "#f44336",  # Red for disconnect button
+		"disconnect_button_fg": "#ffffff",  # White text for disconnect button
         
         # Message backgrounds
         "regular_message_bg": "#fafafa",    # Off-white
@@ -31,8 +34,11 @@ THEME_COLORS = {
     "dark": {
         "bg_main": "#212121",       # Main background - dark gray
         "bg_input": "#2c2c2c",       # Input area - lighter dark
-        "status_bar": "#333333",     # Status bar background
-        "status_text": "#bbbbbb",    # Status bar text
+        "primary": "#2196F3",      # Primary color - blue
+        "primary_fg": "#ffffff",  # Primary text color - white
+        "online_status": "#4caf50",  # Green for online status
+        "disconnect_button_bg": "#f44336",  # Red for disconnect button	
+		"disconnect_button_fg": "#ffffff",  # White text for disconnect button
         
         # Message backgrounds
         "regular_message_bg": "#2c2c2c",    # Dark gray
@@ -57,12 +63,14 @@ def get_theme(theme_name="light"):
     return THEME_COLORS.get(theme_name, THEME_COLORS["light"])
 
 # UI constants
-WINDOW_SIZE = "800x500"  # Default window size for the client
-FONT_REGULAR = ("Arial", 12)
-FONT_BOLD = ("Arial", 12, "bold")
-FONT_ITALIC = ("Arial", 12, "italic")
-FONT_BOLD_ITALIC = ("Arial", 12, "bold italic")
-FONT_TIMESTAMP = ("Arial", 10)
+WINDOW_SIZE = "800x600"  # Default window size for the client
+FONT_HEADING = ("Avenir", 16, "bold")
+FONT_SUBHEADING = ("Avenir", 14)
+FONT_REGULAR = ("Avenir", 12)
+FONT_BOLD = ("Avenir", 12, "bold")
+FONT_ITALIC = ("Avenir", 12, "italic")
+FONT_BOLD_ITALIC = ("Avenir", 12, "bold italic")
+FONT_TIMESTAMP = ("Avenir", 10)
 
 # Colors
 COLOR_MY_MESSAGE = "#e6ffe6"  # Light green

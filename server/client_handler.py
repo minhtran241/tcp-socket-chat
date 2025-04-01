@@ -59,7 +59,7 @@ class ClientHandler:
             # Announce new user
             self.broadcast_message(
                 # self.client_socket,
-                f"{SYSTEM_MESSAGE}: {self.username} has joined the chat.", exclude=self.client_socket
+                f"{SYSTEM_MESSAGE}: @{self.username} has joined the chat.", exclude=self.client_socket
             )
             print(f"[INFO] {self.username} ({self.addr[0]}:{self.addr[1]}) connected.")
 
@@ -143,7 +143,7 @@ class ClientHandler:
                     pass
         else:
             # Regular message - broadcast to all
-            self.broadcast_message(f"{self.username}: {message}")
+            self.broadcast_message(f"@{self.username}: {message}")
 
     def send_direct_message(self, target_username, message):
         """Send a direct message to a specific user"""
@@ -193,12 +193,12 @@ class ClientHandler:
                     del self.active_clients[self.client_socket]
 
         try:
-            print(f"[INFO] Closing connection with {self.username}...")
+            print(f"[INFO] Closing connection with @{self.username}...")
             self.client_socket.close()
-            print(f"[INFO] Connection with {self.username} closed.")
+            print(f"[INFO] Connection with @{self.username} closed.")
             self.broadcast_message(
-                f"{SYSTEM_MESSAGE}: {username} has left the chat.", exclude=self.client_socket
+                f"{SYSTEM_MESSAGE}: @{username} has left the chat.", exclude=self.client_socket
             )
-            print(f"[INFO] {username} ({addr[0]}:{addr[1]}) disconnected.")
+            print(f"[INFO] @{username} ({addr[0]}:{addr[1]}) disconnected.")
         except:
             pass
