@@ -26,8 +26,8 @@ class LoginGUI:
         self.colors = self.client.colors
         self.login_frame = None
         self.username_entry = None
-        self.host_entry = None
-        self.port_entry = None
+        self.host = self.client.host
+        self.port_entry = self.client.port
         self.connect_button = None
 
     def setup_login_frame(self):
@@ -44,7 +44,7 @@ class LoginGUI:
             relief=tk.SOLID
         )
         # Position the frame in the center with fixed width
-        self.login_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER, width=380, height=250)
+        self.login_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER, width=380, height=210)
 
         # Add app title
         title_label = Label(
@@ -88,26 +88,6 @@ class LoginGUI:
         self.username_entry.grid(row=0, column=1, sticky="ew", pady=2, ipady=3)
         self.username_entry.focus()
         
-        # Host row
-        Label(
-            form_frame, 
-            text="Host:", 
-            bg=self.colors["bg_main"],
-            font=FONT_BOLD,
-            width=8,
-            anchor="e"
-        ).grid(row=1, column=0, sticky="e", pady=2)
-        
-        self.host_entry = Entry(
-            form_frame, 
-            font=FONT_REGULAR,
-            bd=1,
-            relief=tk.GROOVE,
-            width=15
-        )
-        self.host_entry.insert(0, self.client.host)
-        self.host_entry.grid(row=1, column=1, sticky="ew", pady=2, ipady=3)
-        
         # Port row
         Label(
             form_frame, 
@@ -116,7 +96,7 @@ class LoginGUI:
             font=FONT_BOLD,
             width=8,
             anchor="e"
-        ).grid(row=2, column=0, sticky="e", pady=2)
+        ).grid(row=1, column=0, sticky="e", pady=2)
         
         self.port_entry = Entry(
             form_frame, 
@@ -126,7 +106,7 @@ class LoginGUI:
             width=15
         )
         self.port_entry.insert(0, str(self.client.port))
-        self.port_entry.grid(row=2, column=1, sticky="ew", pady=2, ipady=3)
+        self.port_entry.grid(row=1, column=1, sticky="ew", pady=2, ipady=3)
         
         # Configure column to expand
         form_frame.columnconfigure(1, weight=1)
@@ -147,7 +127,6 @@ class LoginGUI:
         
         # Bind Enter key to connect function
         self.username_entry.bind("<Return>", lambda event: self.connect_to_server())
-        self.host_entry.bind("<Return>", lambda event: self.connect_to_server())
         self.port_entry.bind("<Return>", lambda event: self.connect_to_server())
 
     def connect_to_server(self):
@@ -158,11 +137,6 @@ class LoginGUI:
             messagebox.showerror("Error", "Username cannot be empty")
             return
 
-        # Get host and port
-        host = self.host_entry.get().strip()
-        if not host:
-            host = self.client.host
-
         try:
             port = int(self.port_entry.get().strip())
         except ValueError:
@@ -170,7 +144,6 @@ class LoginGUI:
             return
 
         # Update client host and port
-        self.client.host = host
         self.client.port = port
 
         # Try to connect using the client

@@ -50,7 +50,7 @@ class ChatGUI:
 
         # Set window title with username
         self.root.title(
-            f"Chat - {self.client.username} ({self.client.host}:{self.client.port})"
+            f"TCP Socket Chat App - {self.client.username} ({self.client.host}:{self.client.port})"
         )
 
         # Add header with user info and disconnect button
@@ -176,6 +176,22 @@ class ChatGUI:
         if self.update_timer:
             self.root.after_cancel(self.update_timer)
             self.update_timer = None
+
+        # Clear any existing data
+        self.chat_display.config(state=tk.NORMAL)
+        self.chat_display.delete("1.0", tk.END)
+        self.chat_display.config(state=tk.DISABLED)
+        
+        if self.message_entry:
+            self.message_entry.delete("1.0", tk.END)
+        
+        # Destroy the chat frame completely
+        if self.chat_frame:
+            self.chat_frame.destroy()
+            self.chat_frame = None
+            self.chat_display = None
+            self.message_entry = None
+            self.status_label = None
 
         # Return to login screen
         self.client.setup_login_ui()
@@ -336,4 +352,5 @@ class ChatGUI:
             messagebox.showwarning(
                 "Disconnected", "You have been disconnected from the server."
             )
+            # Setup login UI again
             self.client.setup_login_ui()

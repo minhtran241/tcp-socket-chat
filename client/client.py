@@ -34,7 +34,7 @@ class ChatClient:
 
         # Create the UI components
         self.root = tk.Tk()
-        self.root.title("Chat Client")
+        self.root.title("TCP Socket Chat Client")
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.root.geometry(WINDOW_SIZE)
         self.root.resizable(False, False)

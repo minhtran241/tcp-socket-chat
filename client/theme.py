@@ -10,6 +10,8 @@ THEME_COLORS = {
         "bg_input": "#ffffff",       # Input area - white
         "primary": "#2196F3",      # Primary color - blue
         "primary_fg": "#ffffff",  # Primary text color - white
+        "secondary": "#f5f5f5",  # Secondary color - light gray
+        "secondary_fg": "#212121",  # Secondary text color - near black
         "online_status": "#4caf50",  # Green for online status
         "disconnect_button_bg": "#f44336",  # Red for disconnect button
 		"disconnect_button_fg": "#ffffff",  # White text for disconnect button
@@ -36,6 +38,8 @@ THEME_COLORS = {
         "bg_input": "#2c2c2c",       # Input area - lighter dark
         "primary": "#2196F3",      # Primary color - blue
         "primary_fg": "#ffffff",  # Primary text color - white
+        "secondary": "#2c2c2c",  # Secondary color - dark gray
+        "secondary_fg": "#e0e0e0",  # Secondary text color - light gray
         "online_status": "#4caf50",  # Green for online status
         "disconnect_button_bg": "#f44336",  # Red for disconnect button	
 		"disconnect_button_fg": "#ffffff",  # White text for disconnect button
@@ -144,5 +148,11 @@ MESSAGE_STYLES = {
     "hyperlink": {
         "foreground": "#0000FF",  # Blue for hyperlinks
         "underline": True
+    },
+    "right_align": {
+        "justify": "right"
+    },
+    "center_align": {
+        "justify": "center"
     }
 }
