@@ -14,23 +14,12 @@ THEME_COLORS = {
         "secondary_fg": "#212121",  # Secondary text color - near black
         "online_status": "#4caf50",  # Green for online status
         "disconnect_button_bg": "#f44336",  # Red for disconnect button
-		"disconnect_button_fg": "#ffffff",  # White text for disconnect button
-        
-        # Message backgrounds
-        "regular_message_bg": "#fafafa",    # Off-white
-        "regular_message_fg": "#212121",    # Near black
-        "system_message_bg": "#f3e5f5",     # Light purple
-        "system_message_fg": "#4a148c",     # Dark purple
-        "error_message_bg": "#ffebee",      # Light red
-        "error_message_fg": "#c62828",      # Dark red
-        "dm_to_me_bg": "#ffebee",           # Light red
-        "dm_to_me_fg": "#c62828",           # Dark red
-        "dm_from_me_bg": "#e3f2fd",         # Light blue
-        "dm_from_me_fg": "#0d47a1",         # Dark blue
-        "my_message_bg": "#e8f5e9",         # Light green
-        "my_message_fg": "#1b5e20",         # Dark green
-        "timestamp": "#666666",             # Gray for timestamps
-        "hyperlink": "#0000FF",             # Blue for hyperlinks
+        "disconnect_button_fg": "#ffffff",  # White text for disconnect button
+        # New color definitions for message types
+        "warning": "#ff9800",      # Orange for warnings
+        "info": "#03a9f4",         # Light blue for information
+        "success": "#4caf50",      # Green for success
+        "debug": "#9c27b0",        # Purple for debug
     },
     
     "dark": {
@@ -42,23 +31,12 @@ THEME_COLORS = {
         "secondary_fg": "#e0e0e0",  # Secondary text color - light gray
         "online_status": "#4caf50",  # Green for online status
         "disconnect_button_bg": "#f44336",  # Red for disconnect button	
-		"disconnect_button_fg": "#ffffff",  # White text for disconnect button
-        
-        # Message backgrounds
-        "regular_message_bg": "#2c2c2c",    # Dark gray
-        "regular_message_fg": "#e0e0e0",    # Light gray
-        "system_message_bg": "#4a148c",     # Deep purple
-        "system_message_fg": "#e1bee7",     # Light purple
-        "error_message_bg": "#b71c1c",      # Dark red
-        "error_message_fg": "#ffcdd2",      # Light red
-        "dm_to_me_bg": "#b71c1c",           # Dark red
-        "dm_to_me_fg": "#ffcdd2",           # Light red
-        "dm_from_me_bg": "#0d47a1",         # Dark blue
-        "dm_from_me_fg": "#bbdefb",         # Light blue
-        "my_message_bg": "#1b5e20",         # Dark green
-        "my_message_fg": "#c8e6c9",         # Light green
-        "timestamp": "#9e9e9e",             # Gray for timestamps
-        "hyperlink": "#64b5f6",             # Light blue for hyperlinks
+        "disconnect_button_fg": "#ffffff",  # White text for disconnect button
+        # New color definitions for message types
+        "warning": "#ff9800",      # Orange for warnings
+        "info": "#03a9f4",         # Light blue for information
+        "success": "#4caf50",      # Green for success
+        "debug": "#9c27b0",        # Purple for debug
     }
 }
 
@@ -85,14 +63,14 @@ COLOR_URL = "blue"
 # Message style configuration
 MESSAGE_STYLES = {
     "my_message": {
-        "background": "#e8f5e9",  # Light green
-        "foreground": "#1b5e20",  # Dark green
+        "background": "#e3f2fd",  # Light blue
+        "foreground": "#0d47a1",  # Dark blue
         "lmargin1": 10,
         "lmargin2": 10,
         "rmargin": 10,
         "relief": "groove",
         "borderwidth": 1,
-		"font": FONT_BOLD
+        "font": FONT_BOLD
     },
     "dm_to_me": {
         "background": "#ffebee",  # Light red
@@ -102,17 +80,17 @@ MESSAGE_STYLES = {
         "rmargin": 10,
         "relief": "groove",
         "borderwidth": 1,
-		"font": FONT_BOLD_ITALIC
+        "font": FONT_BOLD_ITALIC
     },
     "dm_from_me": {
-        "background": "#e3f2fd",  # Light blue
-        "foreground": "#0d47a1",  # Dark blue
+        "background": "#e8f5e9",  # Light green
+        "foreground": "#1b5e20",  # Dark green
         "lmargin1": 10,
         "lmargin2": 10,
         "rmargin": 10,
         "relief": "groove",
         "borderwidth": 1,
-		"font": FONT_BOLD_ITALIC
+        "font": FONT_BOLD_ITALIC
     },
     "regular": {
         "background": "#fafafa",  # Off-white
@@ -121,7 +99,7 @@ MESSAGE_STYLES = {
         "lmargin2": 10,
         "rmargin": 10,
         "borderwidth": 1,
-		"font": FONT_BOLD
+        "font": FONT_BOLD
     },
     "system_message": {
         "background": "#f3e5f5",  # Light purple
@@ -141,18 +119,55 @@ MESSAGE_STYLES = {
         "borderwidth": 1,
         "font": FONT_ITALIC
     },
+    # New message types
+    "warning_message": {
+        "background": "#fff3e0",  # Light orange
+        "foreground": "#e65100",  # Dark orange
+        "lmargin1": 10,
+        "lmargin2": 10,
+        "rmargin": 10,
+        "borderwidth": 1,
+        "font": FONT_BOLD
+    },
+    "info_message": {
+        "background": "#e1f5fe",  # Very light blue
+        "foreground": "#01579b",  # Dark blue
+        "lmargin1": 10,
+        "lmargin2": 10,
+        "rmargin": 10,
+        "borderwidth": 1,
+        "font": FONT_REGULAR
+    },
+    "success_message": {
+        "background": "#e8f5e9",  # Light green
+        "foreground": "#1b5e20",  # Dark green
+        "lmargin1": 10,
+        "lmargin2": 10,
+        "rmargin": 10,
+        "borderwidth": 1,
+        "font": FONT_BOLD
+    },
+    "debug_message": {
+        "background": "#f3e5f5",  # Light purple
+        "foreground": "#4a148c",  # Dark purple
+        "lmargin1": 10,
+        "lmargin2": 10,
+        "rmargin": 10,
+        "borderwidth": 1,
+        "font": FONT_ITALIC
+    },
+    "announcement": {
+        "background": "#bbdefb",  # Light blue
+        "foreground": "#0d47a1",  # Dark blue
+        "lmargin1": 10,
+        "lmargin2": 10,
+        "rmargin": 10,
+        "relief": "ridge",
+        "borderwidth": 2,
+        "font": FONT_BOLD
+    },
     "timestamp": {
         "font": FONT_TIMESTAMP,
         "foreground": "#666666"
     },
-    "hyperlink": {
-        "foreground": "#0000FF",  # Blue for hyperlinks
-        "underline": True
-    },
-    "right_align": {
-        "justify": "right"
-    },
-    "center_align": {
-        "justify": "center"
-    }
 }

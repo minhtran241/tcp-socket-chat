@@ -7,7 +7,7 @@ import tkinter as tk
 if os.name == "posix":
     from tkmacosx import Button
 else:
-	# For Windows and Linux, use the standard tkinter Button
+    # For Windows and Linux, use the standard tkinter Button
     from tkinter import Button
 from tkinter import scrolledtext, Frame, Label, messagebox
 import queue
@@ -20,7 +20,12 @@ from common.constants import (
     DM_FROM,
     DM_TO,
     SYSTEM_MESSAGE,
-    ERROR_MESSAGE
+    ERROR_MESSAGE,
+    WARNING_MESSAGE,
+    INFO_MESSAGE,
+    SUCCESS_MESSAGE,
+    DEBUG_MESSAGE,
+    ANNOUNCEMENT
 )
 from client.theme import FONT_BOLD, FONT_REGULAR, MESSAGE_STYLES
 
@@ -57,14 +62,14 @@ class ChatGUI:
         header_frame = Frame(self.chat_frame, bg=self.colors["bg_main"], padx=10, pady=8)
         header_frame.pack(fill=tk.X)
         
-		# Geen dot for online status
+        # Green dot for online status
         online_status = Label(
-			header_frame, 
-			text="●", 
-			bg=self.colors["bg_main"], 
-			fg=self.colors["online_status"],
-			font=FONT_BOLD
-		)
+            header_frame, 
+            text="●", 
+            bg=self.colors["bg_main"], 
+            fg=self.colors["online_status"],
+            font=FONT_BOLD
+        )
         online_status.pack(side=tk.LEFT)
         user_label = Label(
             header_frame, 
@@ -84,7 +89,7 @@ class ChatGUI:
             pady=2,
             cursor="hand2",
             background=self.colors["disconnect_button_bg"],
-			foreground=self.colors["disconnect_button_fg"],
+            foreground=self.colors["disconnect_button_fg"],
         )
         self.disconnect_button.pack(side=tk.RIGHT)
 
@@ -235,6 +240,16 @@ class ChatGUI:
             msg_tag = "system_message"
         elif message.startswith(ERROR_MESSAGE):
             msg_tag = "error_message"
+        elif message.startswith(WARNING_MESSAGE):
+            msg_tag = "warning_message"  
+        elif message.startswith(INFO_MESSAGE):
+            msg_tag = "info_message"
+        elif message.startswith(SUCCESS_MESSAGE):
+            msg_tag = "success_message"
+        elif message.startswith(DEBUG_MESSAGE):
+            msg_tag = "debug_message"
+        elif message.startswith(ANNOUNCEMENT):
+            msg_tag = "announcement"
         else:
             msg_tag = "regular"
 

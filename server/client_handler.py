@@ -5,7 +5,17 @@ Handles the communication with a single client
 
 import socket
 import threading
-from common.constants import SYSTEM_MESSAGE, DM_FROM, DM_TO, DM_PREFIX
+from common.constants import (
+    SYSTEM_MESSAGE, 
+    ERROR_MESSAGE, 
+    WARNING_MESSAGE,
+    INFO_MESSAGE, 
+    SUCCESS_MESSAGE, 
+    ANNOUNCEMENT,
+    DM_FROM, 
+    DM_TO, 
+    DM_PREFIX
+)
 
 
 class ClientHandler:
@@ -46,7 +56,7 @@ class ClientHandler:
 
             if username_in_use:
                 self.client_socket.send(
-                    f"{SYSTEM_MESSAGE}: Username '{self.username}' is already in use. Please choose another.".encode(
+                    f"{ERROR_MESSAGE}: Username '{self.username}' is already in use. Please choose another.".encode(
                         "utf-8"
                     )
                 )
@@ -58,8 +68,7 @@ class ClientHandler:
 
             # Announce new user
             self.broadcast_message(
-                # self.client_socket,
-                f"{SYSTEM_MESSAGE}: @{self.username} has joined the chat.", exclude=self.client_socket
+                f"{ANNOUNCEMENT}: @{self.username} has joined the chat.", exclude=self.client_socket
             )
             print(f"[INFO] {self.username} ({self.addr[0]}:{self.addr[1]}) connected.")
 
@@ -88,7 +97,7 @@ class ClientHandler:
 
         try:
             self.client_socket.send(
-                f"{SYSTEM_MESSAGE}: Welcome, {self.username}! {user_list}".encode(
+                f"{SUCCESS_MESSAGE}: Welcome, {self.username}! {user_list}".encode(
                     "utf-8"
                 )
             )
@@ -131,11 +140,21 @@ class ClientHandler:
             if len(parts) > 1:
                 target_username = parts[0]
                 dm_message = parts[1]
-                self.send_direct_message(target_username, dm_message)
+                print(f"[INFO] DM from {self.username} to {target_username}: {dm_message}")
+                if target_username.lower() != self.username.lower():
+                    self.send_direct_message(target_username, dm_message)
+                else:
+                    # Sending a DM to oneself is not allowed
+                    try:
+                        self.client_socket.send(
+                            f"{WARNING_MESSAGE}: You cannot DM yourself.".encode("utf-8")
+                        )
+                    except:
+                        pass
             else:
                 try:
                     self.client_socket.send(
-                        f"{SYSTEM_MESSAGE}: Invalid DM format. Use '@username message'".encode(
+                        f"{INFO_MESSAGE}: Invalid DM format. Use '@username message'".encode(
                             "utf-8"
                         )
                     )
@@ -168,7 +187,7 @@ class ClientHandler:
         # User not found
         try:
             self.client_socket.send(
-                f"{SYSTEM_MESSAGE}: User '{target_username}' not found.".encode("utf-8")
+                f"{WARNING_MESSAGE}: User '{target_username}' not found.".encode("utf-8")
             )
         except:
             pass
@@ -191,13 +210,12 @@ class ClientHandler:
                 else:
                     # Unnamed client
                     del self.active_clients[self.client_socket]
-
         try:
             print(f"[INFO] Closing connection with @{self.username}...")
             self.client_socket.close()
             print(f"[INFO] Connection with @{self.username} closed.")
             self.broadcast_message(
-                f"{SYSTEM_MESSAGE}: @{username} has left the chat.", exclude=self.client_socket
+                f"{INFO_MESSAGE}: @{username} has left the chat.", exclude=self.client_socket
             )
             print(f"[INFO] @{username} ({addr[0]}:{addr[1]}) disconnected.")
         except:

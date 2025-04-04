@@ -84,7 +84,7 @@ class ChatClient:
             return True
 
         except Exception as e:
-            self.message_queue.put(f"[ERROR] Could not connect to server: {str(e)}")
+            self.message_queue.put(f"[Error] Could not connect to server: {str(e)}")
             return False
 
     def receive_messages(self):
@@ -105,7 +105,7 @@ class ChatClient:
                 continue
             except Exception as e:
                 if self.running:
-                    self.message_queue.put(f"[ERROR] Connection lost: {str(e)}")
+                    self.message_queue.put(f"[Error] Connection lost: {str(e)}")
                     self.running = False
                 break
 
@@ -123,7 +123,7 @@ class ChatClient:
             self.socket.send(message.encode("utf-8"))
             return True
         except Exception as e:
-            self.message_queue.put(f"[ERROR] Could not send message: {str(e)}")
+            self.message_queue.put(f"[Error] Could not send message: {str(e)}")
             return False
 
     def disconnect(self):
