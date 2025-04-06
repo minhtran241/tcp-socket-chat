@@ -1,6 +1,6 @@
 # TCP Socket Chat Application
 
-A multi-threaded socket-based group chat application built with Python and Tkinter, allowing multiple users to communicate through a central server.
+A lightweight, multi-threaded chat application built with TCP sockets that enables real-time group communication.
 
 ![Chat Application](screenshots/chat-interface.png)
 
@@ -9,7 +9,6 @@ A multi-threaded socket-based group chat application built with Python and Tkint
 -   [TCP Socket Chat Application](#tcp-socket-chat-application)
     -   [Table of Contents](#table-of-contents)
     -   [Features](#features)
-    -   [Requirements](#requirements)
     -   [Architecture Overview](#architecture-overview)
     -   [Server Design](#server-design)
         -   [Data Structures](#data-structures)
@@ -25,6 +24,7 @@ A multi-threaded socket-based group chat application built with Python and Tkint
         -   [3. Emoji Shortcode Support](#3-emoji-shortcode-support)
         -   [4. Direct Messaging](#4-direct-messaging)
     -   [Running the Application](#running-the-application)
+        -   [Requirements](#requirements)
         -   [Starting the Server](#starting-the-server)
         -   [Starting the Client](#starting-the-client)
         -   [SSH Tunneling (for remote connections)](#ssh-tunneling-for-remote-connections)
@@ -48,16 +48,6 @@ A multi-threaded socket-based group chat application built with Python and Tkint
 -   Emoji shortcode support (e.g., `:thumbsup:` → 👍)
 -   Status updates for user join/leave events
 -   Clean disconnection handling for both server and clients
-
-## Requirements
-
-1. Install the `uv` package manager [here](https://docs.astral.sh/uv/getting-started/installation/)
-2. Install python 3.13+ using `uv` [here](https://docs.astral.sh/uv/guides/install-python/)
-3. Install the required packages:
-
-    ```bash
-    uv pip install -r pyproject.toml
-    ```
 
 ## Architecture Overview
 
@@ -169,7 +159,7 @@ The client consists of several modular components:
 
     - Regular messages are displayed in the main chat area
     - Direct messages are highlighted and color-coded
-    - System messages (INFO | SUCCESS | ANNOUNCEMENT | WARNING | ERROR) are formatted differently
+    - System messages: `INFO` 📌 | `SUCCESS` ✅ | `ANNOUNCEMENT` 📢 | `WARNING` ⚠️ | `ERROR` ❌
 
 > Note: Please refer to [`client/theme.py`](https://github.com/minhtran241/tcp-socket-chat/blob/main/client/theme.py) for the complete list of message types and their formatting.
 
@@ -222,6 +212,16 @@ The client consists of several modular components:
 -   Confirmation messages for sender
 
 ## Running the Application
+
+### Requirements
+
+1. Install the `uv` package manager [here](https://docs.astral.sh/uv/getting-started/installation/)
+2. Install python 3.13+ using `uv` [here](https://docs.astral.sh/uv/guides/install-python/)
+3. Install the required packages:
+
+    ```bash
+    uv pip install -r pyproject.toml
+    ```
 
 ### Starting the Server
 
@@ -283,13 +283,13 @@ ssh -N -L 5000:localhost:5000 zzzzzzzz@eos20.cis.gvsu.edu &
 
 ### Challenges and Solutions
 
--   **Challenge**: Thread-safe client management
+-   **Challenge**: Thread-safe client management  
     **Solution**: Implemented mutex locks for shared data structures
 
--   **Challenge**: Handling unexpected disconnections
+-   **Challenge**: Handling unexpected disconnections  
     **Solution**: Added timeout detection and clean reconnection logic
 
--   **Challenge**: Real-time UI updates without blocking
+-   **Challenge**: Real-time UI updates without blocking  
     **Solution**: Used message queue and separate UI update timer
 
 ## License
