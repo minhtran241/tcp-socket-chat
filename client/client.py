@@ -111,7 +111,7 @@ class ChatClient:
 
         # If we're still supposed to be running but we exited the loop, server disconnected
         if self.running:
-            self.message_queue.put("[System] Server disconnected.")
+            self.message_queue.put("[Info] Server disconnected.")
             self.chat_ui.handle_server_disconnect()
 
     def send_message(self, message):

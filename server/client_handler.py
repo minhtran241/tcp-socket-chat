@@ -4,9 +4,7 @@ Handles the communication with a single client
 """
 
 import socket
-import threading
 from common.constants import (
-    SYSTEM_MESSAGE, 
     ERROR_MESSAGE, 
     WARNING_MESSAGE,
     INFO_MESSAGE, 
@@ -154,7 +152,7 @@ class ClientHandler:
             else:
                 try:
                     self.client_socket.send(
-                        f"{INFO_MESSAGE}: Invalid DM format. Use '@username message'".encode(
+                        f"{WARNING_MESSAGE}: Invalid DM format. Use '@username message'".encode(
                             "utf-8"
                         )
                     )

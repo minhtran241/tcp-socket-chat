@@ -9,7 +9,7 @@ if os.name == "posix":
 else:
     # For Windows and Linux, use the standard tkinter Button
     from tkinter import Button
-from tkinter import scrolledtext, Frame, Label, messagebox
+from tkinter import scrolledtext, Frame, Label, messagebox, Canvas
 import queue
 import datetime
 import webbrowser
@@ -19,7 +19,6 @@ from client.tkHyperlinkManager import HyperlinkManager
 from common.constants import (
     DM_FROM,
     DM_TO,
-    SYSTEM_MESSAGE,
     ERROR_MESSAGE,
     WARNING_MESSAGE,
     INFO_MESSAGE,
@@ -62,6 +61,30 @@ class ChatGUI:
         header_frame = Frame(self.chat_frame, bg=self.colors["bg_main"], padx=10, pady=8)
         header_frame.pack(fill=tk.X)
         
+        # Add avatar placeholder (circle)
+        avatar_size = 30
+        avatar_canvas = Canvas(
+            header_frame, 
+            width=avatar_size, 
+            height=avatar_size, 
+            bg=self.colors["bg_main"], 
+            highlightthickness=0
+        )
+        avatar_canvas.pack(side=tk.LEFT, padx=(0, 10))
+        
+        # Draw avatar square
+        avatar_canvas.create_rectangle(
+            0, 0, avatar_size, avatar_size,
+            fill=self.colors["primary"],
+            outline=self.colors["primary"],
+        )
+        avatar_canvas.create_text(
+            avatar_size/2, avatar_size/2,
+            text=self.client.username[0].upper(),
+            fill=self.colors["primary_fg"],
+            font=FONT_BOLD
+        )
+        
         # Green dot for online status
         online_status = Label(
             header_frame, 
@@ -71,6 +94,7 @@ class ChatGUI:
             font=FONT_BOLD
         )
         online_status.pack(side=tk.LEFT)
+        
         user_label = Label(
             header_frame, 
             text=f"Logged in as: {self.client.username}",
@@ -169,6 +193,16 @@ class ChatGUI:
             padx=10
         )
         self.status_label.pack(side=tk.LEFT)
+
+        # Add connection indicator
+        self.connection_indicator = Label(
+            self.status_frame,
+            text="●",
+            bg=self.colors["primary"],
+            fg=self.colors["online_status"],
+            padx=10
+        )
+        self.connection_indicator.pack(side=tk.RIGHT)
         
         # Start message processing
         self.start_message_processing()
@@ -236,8 +270,6 @@ class ChatGUI:
             msg_tag = "dm_to_me"
         elif message.startswith(DM_TO):
             msg_tag = "dm_from_me"
-        elif message.startswith(SYSTEM_MESSAGE):
-            msg_tag = "system_message"
         elif message.startswith(ERROR_MESSAGE):
             msg_tag = "error_message"
         elif message.startswith(WARNING_MESSAGE):
