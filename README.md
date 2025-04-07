@@ -71,7 +71,7 @@ with self.clients_lock:
 	self.active_clients[self.client_socket] = (self.username, self.addr)
 ```
 
-1. **Client Thread Dictionary**:
+2. **Client Thread Dictionary**:
 
 -   Maps client sockets to their respective handler threads
 -   Used for thread management and cleanup
@@ -161,9 +161,9 @@ The client consists of several modular components:
     - Direct messages are highlighted and color-coded
     - System messages: `INFO` 📌 | `SUCCESS` ✅ | `ANNOUNCEMENT` 📢 | `WARNING` ⚠️ | `ERROR` ❌
 
-> Note: Please refer to [`client/theme.py`](https://github.com/minhtran241/tcp-socket-chat/blob/main/client/theme.py) for the complete list of message types and their formatting.
+    > Note: Please refer to [`client/theme.py`](https://github.com/minhtran241/tcp-socket-chat/blob/main/client/theme.py) for the complete list of message types and their formatting.
 
-1. **UI Operations**:
+4. **UI Operations**:
     - Login screen for server connection details
     - Chat interface with separated input and display areas
     - Status indicators for connection state
