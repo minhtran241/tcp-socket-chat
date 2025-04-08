@@ -95,7 +95,7 @@ thread.start()
 2. **Connection Handling**:
 
     - Accepts incoming client connections
-    - Creates a new `ClientHandler` for each connection
+    - Creates a new [`ClientHandler`](https://github.com/minhtran241/tcp-socket-chat/blob/main/server/client_handler.py) for each connection
     - Starts a dedicated thread for each client
 
 3. **Broadcasting Messages**:
