@@ -6,6 +6,7 @@ Combines network communication with UI components
 import socket
 import threading
 import queue
+import darkdetect
 import tkinter as tk
 
 from client.gui.login import LoginGUI
@@ -26,8 +27,12 @@ class ChatClient:
         self.connected = False
         self.running = True
         self.receive_thread = None
-        self.theme = "light"  # Default theme
+        self.theme = darkdetect.theme().lower()
         self.colors = get_theme(self.theme)
+        
+        # self.dark_listerner = threading.Thread(target=darkdetect.listener, args=(print,))
+        # self.dark_listerner.daemon = True
+        # self.dark_listerner.start()
 
         # Message queue for thread-safe communication
         self.message_queue = queue.Queue()
