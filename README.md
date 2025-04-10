@@ -252,19 +252,21 @@ The client will display a login screen where you can enter your username, theme 
 
 #### Minh Tran
 
+-   Created login screen and chat interface
 -   Designed and implemented the multi-threaded server architecture
 -   Created the message routing and broadcasting system
 -   Implemented direct messaging functionality
 -   Added URL detection and clickable links feature
 -   Developed emoji shortcode processing system
+-   Implemented the theme manager for light and dark modes
 
 #### Elijah Morgan
 
 -   Designed and implemented the Tkinter GUI components
--   Created login screen and chat interface
 -   Handled message formatting and display
 -   Prepared project documentation and testing
 -   Handled networking and server hosting for final demo
+-   Cleaned up the codebase and ensured consistency
 
 ## Development Process
 
