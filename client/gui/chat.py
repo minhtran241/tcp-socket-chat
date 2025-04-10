@@ -32,7 +32,7 @@ from client.theme import FONT_BOLD, FONT_REGULAR, MESSAGE_STYLES
 class ChatGUI:
     """Chat interface for the chat client"""
 
-    def __init__(self, root:tk.Tk, client:"clint.ChatClient") -> None:
+    def __init__(self, root:tk.Tk, client:"client.ChatClient") -> None:
         """Initialize the chat UI with root window and client reference"""
         self.root = root
         self.client = client
@@ -262,28 +262,23 @@ class ChatGUI:
             return
 
         self.chat_display.config(state=tk.NORMAL)
-
+        message_tags = {
+            f"@{self.client.username}: ": "my_message",
+            DM_FROM: "dm_to_me",
+            DM_TO: "dm_from_me",
+            ERROR_MESSAGE: "error_message",
+            WARNING_MESSAGE: "warning_message",
+            INFO_MESSAGE: "info_message",
+            SUCCESS_MESSAGE: "success_message",
+            DEBUG_MESSAGE: "debug_message",
+            ANNOUNCEMENT: "announcement",
+        }
+        
         # Determine message type for formatting
-        if message.startswith(f"@{self.client.username}: "):
-            msg_tag = "my_message"
-        elif message.startswith(DM_FROM):
-            msg_tag = "dm_to_me"
-        elif message.startswith(DM_TO):
-            msg_tag = "dm_from_me"
-        elif message.startswith(ERROR_MESSAGE):
-            msg_tag = "error_message"
-        elif message.startswith(WARNING_MESSAGE):
-            msg_tag = "warning_message"  
-        elif message.startswith(INFO_MESSAGE):
-            msg_tag = "info_message"
-        elif message.startswith(SUCCESS_MESSAGE):
-            msg_tag = "success_message"
-        elif message.startswith(DEBUG_MESSAGE):
-            msg_tag = "debug_message"
-        elif message.startswith(ANNOUNCEMENT):
-            msg_tag = "announcement"
-        else:
-            msg_tag = "regular"
+        msg_tag = next(
+            (tag for prefix, tag in message_tags.items() if message.startswith(prefix)),
+            "regular"
+        )
 
         # Add timestamp
         timestamp = datetime.datetime.now().strftime("%H:%M:%S")
