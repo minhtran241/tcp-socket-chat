@@ -1,6 +1,6 @@
 # TCP Socket Chat Application
 
-A lightweight, multi-threaded chat application built with TCP sockets that enables real-time group communication.
+A lightweight, multi-threaded chat application built on TCP sockets to enable real-time group communication.
 
 ![Chat Application](screenshots/chat-interface.png)
 
@@ -41,13 +41,13 @@ A lightweight, multi-threaded chat application built with TCP sockets that enabl
 ## Features
 
 -   Multi-threaded server handling multiple simultaneous connections
--   User-friendly Tkinter GUI
--   Real-time messaging with automatic scrolling
--   Direct messaging between users with `@username` syntax
--   URL detection and clickable links
+-   User-friendly ['Tkinter'](https://docs.python.org/3/library/tkinter.html) GUI
+-   Real-time messaging with automatic chat scrolling
+-   Direct messaging between users via `@username` syntax
+-   Automatically detects and converts URLs in messages into clickable links
 -   Emoji shortcode support (e.g., `:thumbsup:` → 👍)
 -   Status updates for user join/leave events
--   Clean disconnection handling for both server and clients
+-   Clean connection handling for both server and clients
 
 ## Architecture Overview
 
@@ -253,7 +253,7 @@ ssh -N -L 5000:localhost:5000 zzzzzzzz@eos20.cis.gvsu.edu &
 ### Team Members
 
 -   **Minh Tran**: Server implementation and extra credit features
--   **Elijah Morgan**: GUI implementation and documentation
+-   **Elijah Morgan**: GUI implementation, documentation, and server hosting.
 
 ### Responsibilities Breakdown
 
@@ -294,4 +294,4 @@ ssh -N -L 5000:localhost:5000 zzzzzzzz@eos20.cis.gvsu.edu &
 
 ## License
 
-This project is created for educational purposes as part of a programming assignment at Grand Valley State University.
+This project was created for educational purposes as part of a programming assignment at Grand Valley State University.
