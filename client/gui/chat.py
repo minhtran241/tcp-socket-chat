@@ -32,7 +32,7 @@ from client.theme import FONT_BOLD, FONT_REGULAR, MESSAGE_STYLES
 class ChatGUI:
     """Chat interface for the chat client"""
 
-    def __init__(self, root, client):
+    def __init__(self, root:tk.Tk, client:"clint.ChatClient") -> None:
         """Initialize the chat UI with root window and client reference"""
         self.root = root
         self.client = client
@@ -44,7 +44,7 @@ class ChatGUI:
         self.update_timer = None
         self.status_label = None
 
-    def setup_chat_frame(self):
+    def setup_chat_frame(self) -> None:
         """Create main chat interface with proper color constants for message types"""
         if self.chat_frame:
             self.chat_frame.destroy()
@@ -207,7 +207,7 @@ class ChatGUI:
         # Start message processing
         self.start_message_processing()
 
-    def disconnect_from_server(self):
+    def disconnect_from_server(self) -> None:
         """Disconnect from the server and return to login screen"""
         self.client.disconnect()
 
@@ -235,7 +235,7 @@ class ChatGUI:
         # Return to login screen
         self.client.setup_login_ui()
 
-    def start_message_processing(self):
+    def start_message_processing(self) -> None:
         """Start processing messages from the queue"""
         # Cancel any existing timer
         if self.update_timer:
@@ -244,7 +244,7 @@ class ChatGUI:
         # Start a new timer
         self.update_timer = self.root.after(100, self.process_messages)
 
-    def process_messages(self):
+    def process_messages(self) -> None:
         """Process messages from the queue and update UI"""
         try:
             while not self.client.message_queue.empty():
@@ -256,7 +256,7 @@ class ChatGUI:
         if self.client.running:
             self.update_timer = self.root.after(100, self.process_messages)
 
-    def display_message(self, message):
+    def display_message(self, message) -> None:
         """Add a message to the chat display with proper styling for URLs and message types"""
         if not self.chat_display:
             return
@@ -329,7 +329,7 @@ class ChatGUI:
         self.chat_display.see(tk.END)
         self.chat_display.config(state=tk.DISABLED)
 
-    def process_emoji_as_you_type(self, event):
+    def process_emoji_as_you_type(self, event) -> None:
         """Process emoji shortcodes as the user types"""
         if not self.message_entry:
             return
@@ -355,7 +355,7 @@ class ChatGUI:
             except:
                 pass
 
-    def send_message(self):
+    def send_message(self) -> None:
         """Send message to server"""
         if not self.message_entry:
             return
@@ -377,7 +377,7 @@ class ChatGUI:
                 text=f"Connected to {self.client.host}:{self.client.port}")
             )
 
-    def handle_return_key(self, event):
+    def handle_return_key(self, event) -> None|str:
         """Handle Return key press in message entry field"""
         # If Shift+Enter is pressed, allow newline
         if event.state & 0x1:  # Shift is pressed
@@ -387,7 +387,7 @@ class ChatGUI:
         self.send_message()
         return "break"  # Prevent default behavior
 
-    def handle_server_disconnect(self):
+    def handle_server_disconnect(self) -> None:
         """Handle server disconnect event"""
         # Stop the message processing timer
         if self.update_timer:

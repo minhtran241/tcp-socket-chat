@@ -7,13 +7,13 @@ import re
 import emoji
 
 
-def process_emoji_shortcodes(text):
+def process_emoji_shortcodes(text:str) -> str:
     """Convert emoji shortcodes to Unicode emojis"""
     # Using the emoji library to convert shortcodes
     return emoji.emojize(text, language="alias")
 
 
-def extract_urls(text):
+def extract_urls(text:str) -> list[tuple[int, int, str]]:
     """Extract URLs from text and return a list of (start_pos, end_pos, url) tuples"""
     url_pattern = re.compile(r"(https?://[^\s]+)")
     urls = []

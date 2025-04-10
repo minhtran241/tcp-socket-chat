@@ -42,7 +42,7 @@ THEME_COLORS = {
     }
 }
 
-def get_theme(theme_name="light"):
+def get_theme(theme_name:str="light") -> dict[str, str]:
     """Get the theme colors for the specified theme name"""
     return THEME_COLORS.get(theme_name, THEME_COLORS["light"])
 

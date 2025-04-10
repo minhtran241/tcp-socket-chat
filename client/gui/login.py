@@ -9,6 +9,7 @@ if os.name == "posix":
     from tkmacosx import Button
 else:
     # For Windows and Linux, use the standard tkinter Button
+    #NOTE Linux may have issues on Xorg desktop environments
     from tkinter import Button
 from tkinter import Frame, Label, messagebox, Entry
 
@@ -18,7 +19,7 @@ from client.theme import FONT_BOLD, FONT_REGULAR, FONT_HEADING, FONT_SUBHEADING
 class LoginGUI:
     """Login interface for the chat client"""
 
-    def __init__(self, root, client, theme="light"):
+    def __init__(self, root:tk.Tk, client:"client.ChatClient", theme:str="light") -> None:
         """Initialize the login UI with root window and client reference"""
         self.root = root
         self.client = client
@@ -30,7 +31,7 @@ class LoginGUI:
         self.port_entry = self.client.port
         self.connect_button = None
 
-    def setup_login_frame(self):
+    def setup_login_frame(self) -> None:
         """Create a compact login frame with username input and connect button"""
         # Clear any existing frames
         if self.login_frame:
@@ -129,7 +130,7 @@ class LoginGUI:
         self.username_entry.bind("<Return>", lambda event: self.connect_to_server())
         self.port_entry.bind("<Return>", lambda event: self.connect_to_server())
 
-    def connect_to_server(self):
+    def connect_to_server(self) -> None:
         """Connect to the chat server with the entered username"""
         username = self.username_entry.get().strip()
 

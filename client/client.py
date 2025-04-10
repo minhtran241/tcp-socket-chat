@@ -18,7 +18,7 @@ from common.constants import DEFAULT_HOST, DEFAULT_PORT
 class ChatClient:
     """Chat client that connects to a server and manages communication and UI"""
 
-    def __init__(self, host=DEFAULT_HOST, port=DEFAULT_PORT):
+    def __init__(self, host:str=DEFAULT_HOST, port:int=DEFAULT_PORT) -> None:
         """Initialize the client with host and port"""
         self.host = host
         self.port = port
@@ -51,20 +51,20 @@ class ChatClient:
         self.login_ui = LoginGUI(self.root, self, self.theme)
         self.chat_ui = ChatGUI(self.root, self)
 
-    def start(self):
+    def start(self) -> None:
         """Start the client application"""
         self.setup_login_ui()
         self.root.mainloop()
 
-    def setup_login_ui(self):
+    def setup_login_ui(self) -> None:
         """Initialize and display the login UI"""
         self.login_ui.setup_login_frame()
 
-    def setup_chat_ui(self):
+    def setup_chat_ui(self) -> None:
         """Initialize and display the chat UI"""
         self.chat_ui.setup_chat_frame()
 
-    def connect_to_server(self, username):
+    def connect_to_server(self, username:str) -> bool:
         """Connect to the chat server"""
         self.username = username
 
@@ -92,7 +92,7 @@ class ChatClient:
             self.message_queue.put(f"[Error] Could not connect to server: {str(e)}")
             return False
 
-    def receive_messages(self):
+    def receive_messages(self) -> None:
         """Receive messages from server and put them in queue"""
         while self.running:
             try:
@@ -119,7 +119,7 @@ class ChatClient:
             self.message_queue.put("[Info] Server disconnected.")
             self.chat_ui.handle_server_disconnect()
 
-    def send_message(self, message):
+    def send_message(self, message:str) -> bool:
         """Send message to server"""
         if not self.connected or not self.socket:
             return False
@@ -131,7 +131,7 @@ class ChatClient:
             self.message_queue.put(f"[Error] Could not send message: {str(e)}")
             return False
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         """Disconnect from the server"""
         # Set running to False to stop the receive thread
         self.running = False
@@ -154,7 +154,7 @@ class ChatClient:
                 pass
             self.receive_thread = None
 
-    def on_closing(self):
+    def on_closing(self) -> None:
         """Handle window close event"""
         import tkinter.messagebox as messagebox
         if messagebox.askokcancel("Quit", "Do you want to quit?"):
@@ -167,7 +167,7 @@ class ChatClient:
             self.root.destroy()
 
 
-def start_client(host=DEFAULT_HOST, port=DEFAULT_PORT):
+def start_client(host:str=DEFAULT_HOST, port:int=DEFAULT_PORT) -> None:
     """Start the chat client with the specified host and port"""
     client = ChatClient(host, port)
     client.start()
