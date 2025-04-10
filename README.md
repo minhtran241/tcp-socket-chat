@@ -271,6 +271,7 @@ ssh -N -L 5000:localhost:5000 zzzzzzzz@eos20.cis.gvsu.edu &
 -   Created login screen and chat interface
 -   Handled message formatting and display
 -   Prepared project documentation and testing
+-   Handled networking and server hosting for final demo
 
 ## Development Process
 
