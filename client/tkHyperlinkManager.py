@@ -1,14 +1,16 @@
 from tkinter import Text, CURRENT
+
 # Source: https://web.archive.org/web/20200806215420/http://effbot.org/zone/tkinter-text-hyperlink.htm
-# and https://stackoverflow.com/questions/49353034/python-tkinter-have-displayed-text-as-hyperlink 
+# and https://stackoverflow.com/questions/49353034/python-tkinter-have-displayed-text-as-hyperlink
+
 
 class HyperlinkManager:
 
-    def __init__(self, text:str) -> None:
+    def __init__(self, text: str, fg: str) -> None:
 
         self.text = text
 
-        self.text.tag_config("hyper", foreground="blue", underline=1)
+        self.text.tag_config("hyper", foreground=fg, underline=1)
 
         self.text.tag_bind("hyper", "<Enter>", self._enter)
         self.text.tag_bind("hyper", "<Leave>", self._leave)

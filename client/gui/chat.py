@@ -2,8 +2,10 @@
 Chat UI Implementation
 Handles the chat interface for the chat client with enhanced visual styling
 """
+
 import os
 import tkinter as tk
+
 if os.name == "posix":
     from tkmacosx import Button
 else:
@@ -24,7 +26,7 @@ from common.constants import (
     INFO_MESSAGE,
     SUCCESS_MESSAGE,
     DEBUG_MESSAGE,
-    ANNOUNCEMENT
+    ANNOUNCEMENT,
 )
 from client.theme import FONT_BOLD, FONT_REGULAR, MESSAGE_STYLES
 
@@ -32,7 +34,7 @@ from client.theme import FONT_BOLD, FONT_REGULAR, MESSAGE_STYLES
 class ChatGUI:
     """Chat interface for the chat client"""
 
-    def __init__(self, root:tk.Tk, client:"client.ChatClient") -> None:
+    def __init__(self, root: tk.Tk, client: "client.ChatClient") -> None:
         """Initialize the chat UI with root window and client reference"""
         self.root = root
         self.client = client
@@ -58,45 +60,51 @@ class ChatGUI:
         )
 
         # Add header with user info and disconnect button
-        header_frame = Frame(self.chat_frame, bg=self.colors["bg_main"], padx=10, pady=8)
+        header_frame = Frame(
+            self.chat_frame, bg=self.colors["bg_main"], padx=10, pady=8
+        )
         header_frame.pack(fill=tk.X)
-        
+
         # Add avatar placeholder (circle)
         avatar_size = 30
         avatar_canvas = Canvas(
-            header_frame, 
-            width=avatar_size, 
-            height=avatar_size, 
-            bg=self.colors["bg_main"], 
-            highlightthickness=0
+            header_frame,
+            width=avatar_size,
+            height=avatar_size,
+            bg=self.colors["bg_main"],
+            highlightthickness=0,
         )
         avatar_canvas.pack(side=tk.LEFT, padx=(0, 10))
-        
+
         # Draw avatar square
         avatar_canvas.create_rectangle(
-            0, 0, avatar_size, avatar_size,
+            0,
+            0,
+            avatar_size,
+            avatar_size,
             fill=self.colors["primary"],
             outline=self.colors["primary"],
         )
         avatar_canvas.create_text(
-            avatar_size/2, avatar_size/2,
+            avatar_size / 2,
+            avatar_size / 2,
             text=self.client.username[0].upper(),
             fill=self.colors["primary_fg"],
-            font=FONT_BOLD
+            font=FONT_BOLD,
         )
-        
+
         # Green dot for online status
         online_status = Label(
-            header_frame, 
-            text="●", 
-            bg=self.colors["bg_main"], 
+            header_frame,
+            text="●",
+            bg=self.colors["bg_main"],
             fg=self.colors["online_status"],
-            font=FONT_BOLD
+            font=FONT_BOLD,
         )
         online_status.pack(side=tk.LEFT)
-        
+
         user_label = Label(
-            header_frame, 
+            header_frame,
             text=f"Logged in as: {self.client.username}",
             bg=self.colors["bg_main"],
             font=FONT_BOLD,
@@ -105,8 +113,8 @@ class ChatGUI:
 
         # Disconnect button with default styling
         self.disconnect_button = Button(
-            header_frame, 
-            text="Disconnect", 
+            header_frame,
+            text="Disconnect",
             command=self.disconnect_from_server,
             font=FONT_BOLD,
             padx=10,
@@ -118,13 +126,17 @@ class ChatGUI:
         self.disconnect_button.pack(side=tk.RIGHT)
 
         # Chat area with messages display
-        chat_area = Frame(self.chat_frame, bg=self.colors["bg_main"], highlightbackground=self.colors["primary"])
+        chat_area = Frame(
+            self.chat_frame,
+            bg=self.colors["bg_main"],
+            highlightbackground=self.colors["primary"],
+        )
         chat_area.pack(fill=tk.BOTH, expand=True, padx=10, pady=(0, 10))
-        
+
         # Messages display with rounded corners and border
         self.chat_display = scrolledtext.ScrolledText(
-            chat_area, 
-            wrap=tk.WORD, 
+            chat_area,
+            wrap=tk.WORD,
             font=FONT_REGULAR,
             bg=self.colors["bg_input"],
             bd=1,
@@ -136,7 +148,9 @@ class ChatGUI:
         self.chat_display.config(state=tk.DISABLED)
 
         # Initialize hyperlink manager
-        self.hyperlink_manager = HyperlinkManager(self.chat_display)
+        self.hyperlink_manager = HyperlinkManager(
+            self.chat_display, fg=self.colors["link"]
+        )
 
         # Configure tags for different message types using imported constants
         for tag_name, style in MESSAGE_STYLES.items():
@@ -147,15 +161,16 @@ class ChatGUI:
         input_frame.pack(fill=tk.X, padx=10, pady=(0, 10))
 
         self.message_entry = scrolledtext.ScrolledText(
-            input_frame, 
-            wrap=tk.WORD, 
-            height=3, 
+            input_frame,
+            wrap=tk.WORD,
+            height=3,
             font=FONT_REGULAR,
             bg=self.colors["bg_input"],
+            insertbackground=self.colors["fg_input"],
             bd=1,
             relief=tk.SOLID,
             padx=8,
-            pady=8
+            pady=8,
         )
         self.message_entry.pack(fill=tk.X, side=tk.LEFT, expand=True)
         self.message_entry.focus()
@@ -165,8 +180,8 @@ class ChatGUI:
 
         # Send button with default styling
         self.send_button = Button(
-            input_frame, 
-            text="Send", 
+            input_frame,
+            text="Send",
             command=self.send_message,
             font=FONT_BOLD,
             padx=15,
@@ -179,18 +194,18 @@ class ChatGUI:
 
         # Bind Enter key to send message (Shift+Enter for new line)
         self.message_entry.bind("<Return>", self.handle_return_key)
-        
+
         # Add a status bar
         self.status_frame = Frame(self.chat_frame, bg=self.colors["primary"], height=20)
         self.status_frame.pack(fill=tk.X, side=tk.BOTTOM)
-        
+
         self.status_label = Label(
-            self.status_frame, 
-            text=f"Connected to {self.client.host}:{self.client.port}", 
-            bg=self.colors["primary"], 
+            self.status_frame,
+            text=f"Connected to {self.client.host}:{self.client.port}",
+            bg=self.colors["primary"],
             fg=self.colors["primary_fg"],
             anchor="w",
-            padx=10
+            padx=10,
         )
         self.status_label.pack(side=tk.LEFT)
 
@@ -200,10 +215,10 @@ class ChatGUI:
             text="●",
             bg=self.colors["primary"],
             fg=self.colors["online_status"],
-            padx=10
+            padx=10,
         )
         self.connection_indicator.pack(side=tk.RIGHT)
-        
+
         # Start message processing
         self.start_message_processing()
 
@@ -220,10 +235,10 @@ class ChatGUI:
         self.chat_display.config(state=tk.NORMAL)
         self.chat_display.delete("1.0", tk.END)
         self.chat_display.config(state=tk.DISABLED)
-        
+
         if self.message_entry:
             self.message_entry.delete("1.0", tk.END)
-        
+
         # Destroy the chat frame completely
         if self.chat_frame:
             self.chat_frame.destroy()
@@ -273,28 +288,28 @@ class ChatGUI:
             DEBUG_MESSAGE: "debug_message",
             ANNOUNCEMENT: "announcement",
         }
-        
+
         # Determine message type for formatting
         msg_tag = next(
             (tag for prefix, tag in message_tags.items() if message.startswith(prefix)),
-            "regular"
+            "regular",
         )
 
         # Add timestamp
         timestamp = datetime.datetime.now().strftime("%H:%M:%S")
         self.chat_display.insert(tk.END, f"[{timestamp}] ", "timestamp")
-        
+
         # Insert message prefix ([DM from/to] or [System] or [Error] or username)
         message_prefix = message.split(": ", 1)[0]
         self.chat_display.insert(tk.END, f"{message_prefix}", msg_tag)
         self.chat_display.insert(tk.END, "\t")
-        
+
         # Get message content after prefix
         message = message.split(": ", 1)[1] if ": " in message else message
-        
+
         # Extract URLs from the message
         urls = extract_urls(message)
-        
+
         if urls:
             # Insert message with clickable URLs
             current_pos = 0
@@ -302,14 +317,16 @@ class ChatGUI:
                 # Insert text before URL
                 if url_start > current_pos:
                     self.chat_display.insert(tk.END, message[current_pos:url_start])
-                
+
                 # Insert the URL with hyperlink tags and the url tag
                 url_text = message[url_start:url_end]
-                hyperlink_tags = self.hyperlink_manager.add(lambda u=url: webbrowser.open(u))
+                hyperlink_tags = self.hyperlink_manager.add(
+                    lambda u=url: webbrowser.open(u)
+                )
                 self.chat_display.insert(tk.END, url_text, hyperlink_tags)
-                
+
                 current_pos = url_end
-            
+
             # Insert any remaining text after the last URL
             if current_pos < len(message):
                 self.chat_display.insert(tk.END, message[current_pos:])
@@ -319,7 +336,7 @@ class ChatGUI:
 
         # Add a newline at the end
         self.chat_display.insert(tk.END, "\n")
-        
+
         # Scroll to bottom
         self.chat_display.see(tk.END)
         self.chat_display.config(state=tk.DISABLED)
@@ -365,14 +382,17 @@ class ChatGUI:
         # Send via client
         if self.client.send_message(message):
             self.message_entry.delete("1.0", tk.END)
-            
+
             # Update status temporarily to show message sent
             self.status_label.config(text="Message sent!")
-            self.root.after(2000, lambda: self.status_label.config(
-                text=f"Connected to {self.client.host}:{self.client.port}")
+            self.root.after(
+                2000,
+                lambda: self.status_label.config(
+                    text=f"Connected to {self.client.host}:{self.client.port}"
+                ),
             )
 
-    def handle_return_key(self, event) -> None|str:
+    def handle_return_key(self, event) -> None | str:
         """Handle Return key press in message entry field"""
         # If Shift+Enter is pressed, allow newline
         if event.state & 0x1:  # Shift is pressed

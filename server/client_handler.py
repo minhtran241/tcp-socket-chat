@@ -4,15 +4,16 @@ Handles the communication with a single client
 """
 
 import socket
+import threading
 from common.constants import (
-    ERROR_MESSAGE, 
+    ERROR_MESSAGE,
     WARNING_MESSAGE,
-    INFO_MESSAGE, 
-    SUCCESS_MESSAGE, 
+    INFO_MESSAGE,
+    SUCCESS_MESSAGE,
     ANNOUNCEMENT,
-    DM_FROM, 
-    DM_TO, 
-    DM_PREFIX
+    DM_FROM,
+    DM_TO,
+    DM_PREFIX,
 )
 
 
@@ -20,7 +21,12 @@ class ClientHandler:
     """Handles communication with a single client"""
 
     def __init__(
-        self, client_socket:socket.socket, addr:tuple[str, int], active_clients:dict[socket.socket, tuple[str, tuple[str, int]]], clients_lock:"threading.Lock", broadcast_func:callable
+        self,
+        client_socket: socket.socket,
+        addr: tuple[str, int],
+        active_clients: dict[socket.socket, tuple[str, tuple[str, int]]],
+        clients_lock: threading.Lock,
+        broadcast_func: callable,
     ) -> None:
         """Initialize the client handler"""
         self.client_socket = client_socket
@@ -66,7 +72,8 @@ class ClientHandler:
 
             # Announce new user
             self.broadcast_message(
-                f"{ANNOUNCEMENT}: @{self.username} has joined the chat.", exclude=self.client_socket
+                f"{ANNOUNCEMENT}: @{self.username} has joined the chat.",
+                exclude=self.client_socket,
             )
             print(f"[INFO] {self.username} ({self.addr[0]}:{self.addr[1]}) connected.")
 
@@ -129,7 +136,7 @@ class ClientHandler:
 
         self.running = False
 
-    def process_message(self, message:str) -> None:
+    def process_message(self, message: str) -> None:
         """Process a message from the client"""
         # Check for direct message
         if message.startswith(DM_PREFIX):
@@ -138,14 +145,18 @@ class ClientHandler:
             if len(parts) > 1:
                 target_username = parts[0]
                 dm_message = parts[1]
-                print(f"[INFO] DM from {self.username} to {target_username}: {dm_message}")
+                print(
+                    f"[INFO] DM from {self.username} to {target_username}: {dm_message}"
+                )
                 if target_username.lower() != self.username.lower():
                     self.send_direct_message(target_username, dm_message)
                 else:
                     # Sending a DM to oneself is not allowed
                     try:
                         self.client_socket.send(
-                            f"{WARNING_MESSAGE}: You cannot DM yourself.".encode("utf-8")
+                            f"{WARNING_MESSAGE}: You cannot DM yourself.".encode(
+                                "utf-8"
+                            )
                         )
                     except:
                         pass
@@ -162,7 +173,7 @@ class ClientHandler:
             # Regular message - broadcast to all
             self.broadcast_message(f"@{self.username}: {message}")
 
-    def send_direct_message(self, target_username:str, message:str) -> bool:
+    def send_direct_message(self, target_username: str, message: str) -> bool:
         """Send a direct message to a specific user"""
         # Format the direct message
         formatted_message = f"{DM_FROM} {self.username}]: {message}"
@@ -185,7 +196,9 @@ class ClientHandler:
         # User not found
         try:
             self.client_socket.send(
-                f"{WARNING_MESSAGE}: User '{target_username}' not found.".encode("utf-8")
+                f"{WARNING_MESSAGE}: User '{target_username}' not found.".encode(
+                    "utf-8"
+                )
             )
         except:
             pass
@@ -213,7 +226,8 @@ class ClientHandler:
             self.client_socket.close()
             print(f"[INFO] Connection with @{self.username} closed.")
             self.broadcast_message(
-                f"{INFO_MESSAGE}: @{username} has left the chat.", exclude=self.client_socket
+                f"{INFO_MESSAGE}: @{username} has left the chat.",
+                exclude=self.client_socket,
             )
             print(f"[INFO] @{username} ({addr[0]}:{addr[1]}) disconnected.")
         except:

@@ -6,45 +6,52 @@ Defines theme colors and styles for the chat application with modern design
 # Theme color definitions
 THEME_COLORS = {
     "light": {
-        "bg_main": "#f7f9fb",       # Main background - very light blue-gray
-        "bg_input": "#ffffff",       # Input area - white
-        "primary": "#3f51b5",        # Primary color - indigo
-        "primary_fg": "#ffffff",     # Primary text color - white
-        "secondary": "#e8eaf6",      # Secondary color - light indigo for other messages
-        "secondary_fg": "#303030",   # Secondary text color - dark gray
+        "bg_main": "#f7f9fb",  # Main background - very light blue-gray
+        "fg_main": "#212121",  # Main text color - near black
+        "bg_input": "#ffffff",  # Input area - white
+        "fg_input": "#212121",  # Input text color - near black
+        "primary": "#3f51b5",  # Primary color - indigo
+        "primary_fg": "#ffffff",  # Primary text color - white
+        "secondary": "#e8eaf6",  # Secondary color - light indigo for other messages
+        "secondary_fg": "#303030",  # Secondary text color - dark gray
         "online_status": "#4caf50",  # Green for online status
         "disconnect_button_bg": "#f44336",  # Red for disconnect button
         "disconnect_button_fg": "#ffffff",  # White text for disconnect button
         # Message type colors - enhanced
-        "warning": "#ff9800",      # Orange for warnings
-        "info": "#03a9f4",         # Light blue for information
-        "success": "#4caf50",      # Green for success
-        "debug": "#9c27b0",        # Purple for debug
-        "message_accent": "#e0e0e0", # Light gray for message accents
+        "warning": "#ff9800",  # Orange for warnings
+        "info": "#03a9f4",  # Light blue for information
+        "success": "#4caf50",  # Green for success
+        "debug": "#9c27b0",  # Purple for debug
+        "message_accent": "#e0e0e0",  # Light gray for message accents
+        "link": "#3f51b5",  # Indigo for links
     },
-    
     "dark": {
-        "bg_main": "#121212",       # Main background - very dark gray
-        "bg_input": "#1e1e1e",      # Input area - lighter dark
-        "primary": "#5c6bc0",       # Primary color - indigo with higher value for dark mode
-        "primary_fg": "#ffffff",    # Primary text color - white
-        "secondary": "#2a2a2a",     # Secondary color - dark gray for other messages
+        "bg_main": "#121212",  # Main background - very dark gray
+        "fg_main": "#e0e0e0",  # Main text color - light gray
+        "bg_input": "#1e1e1e",  # Input area - lighter dark
+        "fg_input": "#e0e0e0",  # Input text color - light gray
+        "primary": "#5c6bc0",  # Primary color - indigo with higher value for dark mode
+        "primary_fg": "#ffffff",  # Primary text color - white
+        "secondary": "#2a2a2a",  # Secondary color - dark gray for other messages
         "secondary_fg": "#e0e0e0",  # Secondary text color - light gray
-        "online_status": "#4caf50", # Green for online status
-        "disconnect_button_bg": "#f44336",  # Red for disconnect button	
+        "online_status": "#4caf50",  # Green for online status
+        "disconnect_button_bg": "#f44336",  # Red for disconnect button
         "disconnect_button_fg": "#ffffff",  # White text for disconnect button
         # Message type colors - enhanced for dark mode
-        "warning": "#ff9800",      # Orange for warnings
-        "info": "#03a9f4",         # Light blue for information
-        "success": "#4caf50",      # Green for success
-        "debug": "#9c27b0",        # Purple for debug
-        "message_accent": "#3a3a3a", # Dark gray for message accents
-    }
+        "warning": "#ff9800",  # Orange for warnings
+        "info": "#03a9f4",  # Light blue for information
+        "success": "#4caf50",  # Green for success
+        "debug": "#9c27b0",  # Purple for debug
+        "message_accent": "#3a3a3a",  # Dark gray for message accents
+        "link": "#bb86fc",  # Purple for links
+    },
 }
 
-def get_theme(theme_name:str="light") -> dict[str, str]:
+
+def get_theme(theme_name: str = "light") -> dict[str, str]:
     """Get the theme colors for the specified theme name"""
     return THEME_COLORS.get(theme_name, THEME_COLORS["light"])
+
 
 # UI constants
 WINDOW_SIZE = "900x650"  # Slightly larger default window size
@@ -66,7 +73,7 @@ MESSAGE_STYLES = {
         "rmargin": 10,
         "relief": "flat",
         "borderwidth": 0,
-        "font": FONT_BOLD
+        "font": FONT_BOLD,
     },
     "dm_to_me": {
         "background": "#ffebee",  # Light red
@@ -76,7 +83,7 @@ MESSAGE_STYLES = {
         "rmargin": 10,
         "relief": "flat",
         "borderwidth": 0,
-        "font": FONT_BOLD_ITALIC
+        "font": FONT_BOLD_ITALIC,
     },
     "dm_from_me": {
         "background": "#e8f5e9",  # Light green
@@ -86,7 +93,7 @@ MESSAGE_STYLES = {
         "rmargin": 10,
         "relief": "flat",
         "borderwidth": 0,
-        "font": FONT_BOLD_ITALIC
+        "font": FONT_BOLD_ITALIC,
     },
     "regular": {
         "background": "#f5f5f5",  # Light gray
@@ -95,7 +102,7 @@ MESSAGE_STYLES = {
         "lmargin2": 10,
         "rmargin": 10,
         "borderwidth": 0,
-        "font": FONT_BOLD
+        "font": FONT_BOLD,
     },
     "error_message": {
         "background": "#ffebee",  # Light red
@@ -104,7 +111,7 @@ MESSAGE_STYLES = {
         "lmargin2": 10,
         "rmargin": 10,
         "borderwidth": 0,
-        "font": FONT_ITALIC
+        "font": FONT_ITALIC,
     },
     # Enhanced message types
     "warning_message": {
@@ -114,7 +121,7 @@ MESSAGE_STYLES = {
         "lmargin2": 10,
         "rmargin": 10,
         "borderwidth": 0,
-        "font": FONT_BOLD
+        "font": FONT_BOLD,
     },
     "info_message": {
         "background": "#e1f5fe",  # Very light blue
@@ -123,7 +130,7 @@ MESSAGE_STYLES = {
         "lmargin2": 10,
         "rmargin": 10,
         "borderwidth": 0,
-        "font": FONT_REGULAR
+        "font": FONT_REGULAR,
     },
     "success_message": {
         "background": "#e8f5e9",  # Light green
@@ -132,7 +139,7 @@ MESSAGE_STYLES = {
         "lmargin2": 10,
         "rmargin": 10,
         "borderwidth": 0,
-        "font": FONT_BOLD
+        "font": FONT_BOLD,
     },
     "debug_message": {
         "background": "#f3e5f5",  # Light purple
@@ -141,7 +148,7 @@ MESSAGE_STYLES = {
         "lmargin2": 10,
         "rmargin": 10,
         "borderwidth": 0,
-        "font": FONT_ITALIC
+        "font": FONT_ITALIC,
     },
     "announcement": {
         "background": "#bbdefb",  # Light blue
@@ -151,10 +158,7 @@ MESSAGE_STYLES = {
         "rmargin": 10,
         "relief": "flat",
         "borderwidth": 0,
-        "font": FONT_BOLD
+        "font": FONT_BOLD,
     },
-    "timestamp": {
-        "font": FONT_TIMESTAMP,
-        "foreground": "#757575"
-    },
+    "timestamp": {"font": FONT_TIMESTAMP, "foreground": "#757575"},
 }
