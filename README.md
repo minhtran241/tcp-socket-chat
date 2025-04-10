@@ -2,6 +2,8 @@
 
 A lightweight, multi-threaded chat application built on TCP sockets to enable real-time group communication.
 
+<!-- **Repository**: [https://github.com/minhtran241/tcp-socket-chat](https://github.com/minhtran241/tcp-socket-chat) -->
+
 ![Chat Application](screenshots/chat-interface.png)
 
 ## Table of Contents
@@ -27,7 +29,6 @@ A lightweight, multi-threaded chat application built on TCP sockets to enable re
         -   [Requirements](#requirements)
         -   [Starting the Server](#starting-the-server)
         -   [Starting the Client](#starting-the-client)
-        -   [SSH Tunneling (for remote connections)](#ssh-tunneling-for-remote-connections)
     -   [Team Contributions](#team-contributions)
         -   [Team Members](#team-members)
         -   [Responsibilities Breakdown](#responsibilities-breakdown)
@@ -192,6 +193,7 @@ The client consists of several modular components:
 -   Color-coded messages by type (regular, DM, system messages)
 -   Status indicators for connection state
 -   Timestamp prefixes for all messages
+-   Light and dark themes for user preference
 
 ### 2. URL Detection and Clickable Links
 
@@ -237,16 +239,7 @@ By default, the server runs on localhost port 12345. You can modify these settin
 uv run main.py client --host <host> --port <port>
 ```
 
-The client will display a login screen where you can enter your username and server details.
-
-### SSH Tunneling (for remote connections)
-
-To connect to a server on a remote machine like the GVSU EOS servers:
-
-```bash
-# Replace zzzzzzzz with your EOS/DC userid
-ssh -N -L 5000:localhost:5000 zzzzzzzz@eos20.cis.gvsu.edu &
-```
+The client will display a login screen where you can enter your username, theme preference, and server details.
 
 ## Team Contributions
 
