@@ -34,7 +34,7 @@ from client.theme import FONT_BOLD, FONT_REGULAR, MESSAGE_STYLES
 class ChatGUI:
     """Chat interface for the chat client"""
 
-    def __init__(self, root: tk.Tk, client: "client.ChatClient") -> None:
+    def __init__(self, root: tk.Tk, client: any) -> None:
         """Initialize the chat UI with root window and client reference"""
         self.root = root
         self.client = client
