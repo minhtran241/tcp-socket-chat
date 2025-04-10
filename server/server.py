@@ -12,7 +12,7 @@ from common.constants import DEFAULT_SERVER_HOST, DEFAULT_PORT
 class ChatServer:
     """Chat server that handles multiple client connections"""
 
-    def __init__(self, host=DEFAULT_SERVER_HOST, port=DEFAULT_PORT):
+    def __init__(self, host:str=DEFAULT_SERVER_HOST, port:int=DEFAULT_PORT):
         """Initialize the server with host and port"""
         self.host = host
         self.port = port
@@ -24,7 +24,7 @@ class ChatServer:
         self.clients_lock = threading.Lock()
         self.client_threads = {}
 
-    def start(self):
+    def start(self) -> None:
         """Start the server and listen for connections"""
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -41,7 +41,7 @@ class ChatServer:
             print(f"[ERROR] Server error: {e}")
             self.stop()
 
-    def accept_connections(self):
+    def accept_connections(self) -> None:
         """Accept incoming client connections"""
         try:
             while self.running:
@@ -80,7 +80,7 @@ class ChatServer:
         finally:
             self.stop()
 
-    def broadcast_message(self, message, exclude=None):
+    def broadcast_message(self, message:str, exclude=None):
         """Send message to all clients except the sender"""
         print(f"[INFO] Current clients: {self.active_clients}")
         with self.clients_lock:
@@ -105,7 +105,7 @@ class ChatServer:
                         f"[INFO] Removed dead client: {username} ({addr[0]}:{addr[1]})"
                     )
 
-    def stop(self):
+    def stop(self) -> None:
         """Stop the server and close all connections"""
         self.running = False
 
@@ -127,7 +127,7 @@ class ChatServer:
         print("[INFO] Server closed.")
 
 
-def start_server(host=DEFAULT_SERVER_HOST, port=DEFAULT_PORT):
+def start_server(host:str=DEFAULT_SERVER_HOST, port:int=DEFAULT_PORT) -> None:
     """Start the chat server with the specified host and port"""
     server = ChatServer(host, port)
 

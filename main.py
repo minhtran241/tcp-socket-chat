@@ -4,7 +4,7 @@ from client.client import start_client
 from common.constants import DEFAULT_HOST, DEFAULT_SERVER_HOST, DEFAULT_PORT
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="TCP Socket Chat Application CLI")
     parser.add_argument(
         "mode", choices=["server", "client"], help="Run as server or client"

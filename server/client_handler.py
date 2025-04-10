@@ -20,8 +20,8 @@ class ClientHandler:
     """Handles communication with a single client"""
 
     def __init__(
-        self, client_socket, addr, active_clients, clients_lock, broadcast_func
-    ):
+        self, client_socket:socket.socket, addr:tuple[str, int], active_clients:dict[socket.socket, tuple[str, tuple[str, int]]], clients_lock:"threading.Lock", broadcast_func:callable
+    ) -> None:
         """Initialize the client handler"""
         self.client_socket = client_socket
         self.addr = addr
@@ -31,7 +31,7 @@ class ClientHandler:
         self.username = None
         self.running = True
 
-    def handle(self):
+    def handle(self) -> None:
         """Main method to handle client connection"""
         try:
             # First message should be the username
@@ -86,7 +86,7 @@ class ClientHandler:
             # Client disconnected, clean up
             self.handle_disconnect()
 
-    def send_welcome_message(self):
+    def send_welcome_message(self) -> None:
         """Send welcome message with current user list to the client"""
         with self.clients_lock:
             user_list = "Current users: " + ", ".join(
@@ -102,7 +102,7 @@ class ClientHandler:
         except:
             pass
 
-    def message_loop(self):
+    def message_loop(self) -> None:
         """Handle incoming messages from the client"""
         while self.running:
             try:
@@ -129,7 +129,7 @@ class ClientHandler:
 
         self.running = False
 
-    def process_message(self, message):
+    def process_message(self, message:str) -> None:
         """Process a message from the client"""
         # Check for direct message
         if message.startswith(DM_PREFIX):
@@ -162,7 +162,7 @@ class ClientHandler:
             # Regular message - broadcast to all
             self.broadcast_message(f"@{self.username}: {message}")
 
-    def send_direct_message(self, target_username, message):
+    def send_direct_message(self, target_username:str, message:str) -> bool:
         """Send a direct message to a specific user"""
         # Format the direct message
         formatted_message = f"{DM_FROM} {self.username}]: {message}"
@@ -191,7 +191,7 @@ class ClientHandler:
             pass
         return False
 
-    def handle_disconnect(self):
+    def handle_disconnect(self) -> None:
         """Handle client disconnection"""
         self.running = False
         print(f"[INFO] {self.username} ({self.addr[0]}:{self.addr[1]}) disconnected.")
